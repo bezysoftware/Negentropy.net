@@ -2,9 +2,9 @@
 
 namespace Negentropy
 {
-    internal record Bound(byte[] Id, uint Timestamp) : IComparable<Bound>
+    internal record Bound(byte[] Id, long Timestamp) : IComparable<Bound>
     {
-        public Bound(uint Timestamp)
+        public Bound(long Timestamp)
             : this(Array.Empty<byte>(), Timestamp)
         {
         }
@@ -14,7 +14,7 @@ namespace Negentropy
         {
         }
 
-        public static Bound Max { get; } = new Bound(uint.MaxValue);
+        public static Bound Max { get; } = new Bound(long.MaxValue);
         public static Bound Min { get; } = new Bound(0);
 
         public int CompareTo(Bound? other)

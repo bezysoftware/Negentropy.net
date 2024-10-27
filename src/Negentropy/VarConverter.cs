@@ -7,7 +7,7 @@ namespace Negentropy
     /// </summary>
     internal static class VarConverter
     {
-        public static byte[] ToVarInt(uint n)
+        public static byte[] ToVarInt(long n)
         {
             if (n == 0)
             {
@@ -34,14 +34,14 @@ namespace Negentropy
             return result;
         }
 
-        public static uint FromVarInt(Func<byte> nextByte)
+        public static long FromVarInt(Func<byte> nextByte)
         {
-            uint result = 0;
+            var result = 0L;
 
             while (true)
             {
                 var b = nextByte();
-                result = (result << 7) | (uint)(b & 0x7F);
+                result = (result << 7) | (long)(b & 0x7F);
 
                 if ((b & 128) == 0)
                 {
@@ -50,7 +50,7 @@ namespace Negentropy
             }
         }
 
-        public static uint FromVarInt(byte[] span)
+        public static long FromVarInt(byte[] span)
         {
             var i = 0;
             return FromVarInt(() => span[i++]);

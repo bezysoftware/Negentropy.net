@@ -2,6 +2,9 @@
 
 namespace Negentropy
 {
+    /// <summary>
+    /// Negentropy service. Client first needs to initiate the protocol, send the message to server and reconcile the response.
+    /// </summary>
     public class Negentropy
     {
         const byte PROTOCOL_VERSION = 0x61; // Version 1
@@ -24,6 +27,9 @@ namespace Negentropy
             }
         }
 
+        /// <summary>
+        /// Initiate the protocol. Response should be sent to server.
+        /// </summary>
         public string Initiate()
         {
             if (this.isInitiator) throw new InvalidOperationException("Already initiated");
@@ -38,6 +44,9 @@ namespace Negentropy
             return writer.ToHexString().ToLower();
         }
 
+        /// <summary>
+        /// Runs the reconciliation process.
+        /// </summary>
         public NegentropyReconciliation Reconcile(string query)
         {
             using var reader = new BinaryReader(new MemoryStream(Convert.FromHexString(query)));
@@ -119,7 +128,7 @@ namespace Negentropy
                         var count = reader.ReadVarInt();
                         var theirIds = new HashSet<byte[]>();
 
-                        for (int i = 0; i < count; i++)
+                        for (var i = 0L; i < count; i++)
                         {
                             var id = reader.ReadBytes(ID_SIZE);
                             if (this.isInitiator)
@@ -191,7 +200,7 @@ namespace Negentropy
             var done = writer.BaseStream.Position == 1 && this.isInitiator;
 
             return new NegentropyReconciliation(
-                done ? null : writer.ToHexString().ToLower(),
+                done ? string.Empty : writer.ToHexString().ToLower(),
                 haveIds.Select(x => Convert.ToHexString(x).ToLower()).ToArray(),
                 needIds.Select(x => Convert.ToHexString(x).ToLower()).ToArray());
         }

@@ -48,7 +48,7 @@ namespace Negentropy
                 }
             }
 
-            var length = VarConverter.ToVarInt((uint)ids.Count);
+            var length = VarConverter.ToVarInt(ids.Count);
             var hash = SHA256.Create().ComputeHash([..accumulator, ..length]);
             var result = new byte[SIZE];
 

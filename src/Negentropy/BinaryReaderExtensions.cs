@@ -2,7 +2,7 @@
 {
     internal static class BinaryReaderExtensions
     {
-        public static uint ReadVarInt(this BinaryReader reader)
+        public static long ReadVarInt(this BinaryReader reader)
         {
             return VarConverter.FromVarInt(reader.ReadByte);
         }
@@ -22,15 +22,15 @@
             return new Bound(id, timestamp);
         }
 
-        public static uint ReadTimestamp(this BinaryReader reader, uint previousTimestamp)
+        public static long ReadTimestamp(this BinaryReader reader, long previousTimestamp)
         {
             var timestamp = reader.ReadVarInt();
             
-            timestamp = timestamp == 0 ? uint.MaxValue : timestamp - 1;
+            timestamp = timestamp == 0 ? long.MaxValue : timestamp - 1;
 
-            if (timestamp == uint.MaxValue || previousTimestamp == uint.MaxValue)
+            if (timestamp == long.MaxValue || previousTimestamp == long.MaxValue)
             {
-                return uint.MaxValue;
+                return long.MaxValue;
             }
 
             return timestamp + previousTimestamp;

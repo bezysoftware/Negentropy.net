@@ -2,14 +2,14 @@
 {
     internal static class BinaryWriterExtensions
     {
-        public static void WriteVarInt(this BinaryWriter writer, uint value)
+        public static void WriteVarInt(this BinaryWriter writer, long value)
         {
             writer.Write(VarConverter.ToVarInt(value));
         }
 
         public static void WriteVarInt(this BinaryWriter writer, int value)
         {
-            writer.Write(VarConverter.ToVarInt((uint)value));
+            writer.Write(VarConverter.ToVarInt((long)value));
         }
 
         public static void WriteId(this BinaryWriter writer, string id)
@@ -24,9 +24,9 @@
             writer.Write(bound.Id);
         }
 
-        public static void WriteTimestamp(this BinaryWriter writer, uint timestamp, uint previousTimestamp)
+        public static void WriteTimestamp(this BinaryWriter writer, long timestamp, long previousTimestamp)
         {
-            if (timestamp == uint.MaxValue)
+            if (timestamp == long.MaxValue)
             {
                 writer.WriteVarInt(0);
             }

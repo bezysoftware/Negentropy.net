@@ -31,10 +31,5 @@
     <None Include="..\..\LICENSE" Link="Assets\LICENSE" Pack="true" PackagePath="" />
     <None Include="..\..\README.md" Link="Assets\README.md" Pack="true" PackagePath="" />
   </ItemGroup>
-	
-  <ItemGroup>
-    <!--<PackageReference Include="System.Collections.Immutable" Version="9.0.0-rc.2.24473.5" />-->
-    <PackageReference Include="System.Collections.Immutable" Version="8.0.0" />
-  </ItemGroup>
 
 </Project>

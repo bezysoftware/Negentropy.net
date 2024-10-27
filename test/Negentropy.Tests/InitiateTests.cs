@@ -3,7 +3,7 @@ using Xunit.Abstractions;
 
 namespace Negentropy.Tests
 {
-    public record Item(string Id, uint Timestamp) : INegentropyItem
+    public record Item(string Id, long Timestamp) : INegentropyItem
     {
     }
 
