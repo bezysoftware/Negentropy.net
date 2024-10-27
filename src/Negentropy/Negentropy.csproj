@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <VersionPrefix>1.0.0</VersionPrefix>
     <TargetFramework>net8.0</TargetFramework>
     <PackageId>Negentropy.net</PackageId>
     <Authors>bezysoftware</Authors>
