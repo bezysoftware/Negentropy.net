@@ -1,0 +1,133 @@
+﻿using FluentAssertions;
+using Xunit.Abstractions;
+
+namespace Negentropy.Tests
+{
+    public record Item(string Id, uint Timestamp) : INegentropyItem
+    {
+    }
+
+    public class InitiateTests
+    {
+        [Fact]
+        public void InitiationShortTest()
+        {
+            var expected = "6100000203eb6b05c2e3b008592ac666594d78ed83e7b9ab30f825b9b08878128f7500008c39b916432333e069a4386917609215cc688eb99f06fed01aadc29b1b4b92d6f0abc81d58ebe3b9a87100d47f58bf15e9b1cbf62d38623f11d0f0d17179f5f3ba";
+            Item[] items = [
+                new("eb6b05c2e3b008592ac666594d78ed83e7b9ab30f825b9b08878128f7500008c", 1678011277),
+                new("39b916432333e069a4386917609215cc688eb99f06fed01aadc29b1b4b92d6f0", 1678011278),
+                new("abc81d58ebe3b9a87100d47f58bf15e9b1cbf62d38623f11d0f0d17179f5f3ba", 1678011279)
+            ];
+
+            var builder = new NegentropyBuilder(new NegentropyOptions());
+            builder.AddRange(items);
+            
+            var ne = builder.Build();
+            var result = ne.Initiate();
+
+            result.Should().BeEquivalentTo(expected);
+        }
+
+        [Fact]
+        public void InitiationLongTest()
+        {
+            var expected = "6186a091d7110001b8f388e194cf016a757557a09430af380400017ab09a9cafbf4c75a221496618c9a5bd0400011dc63539f82507ed116e3d30be1610880300018d619da8a759b032c971d67b23098cea03000177cf842b2015fea18be85682b7f2346f030001a01694a5fdd469b25637d1c513f7a3fd0300010cee3c726e05dd9920add8b368bea024030001db0d39c996c0a14e9a118980d848fcbe0300016f86b7dffaaa1a1b2809953d0072208705000165a2802ec0f4e1bc45750a7e5735b3c6030001b56cbbc2fc5697140b6533a11b4de55603000163346230a5cd92a5fd2c58af97e6eb03030001b6245886ab6fde6b5a306da1458b81b8030001af2e20501da47c124ee30f6bd0185c2c030001c8cf0b8f16db22818f97a05014d6fa6f000001bde4354f01af42109ce7ec3513b78433";
+            Item[] items = [
+                new ("eb6b05c2e3b008592ac666594d78ed83e7b9ab30f825b9b08878128f7500008c", 1678011277),
+                new ("39b916432333e069a4386917609215cc688eb99f06fed01aadc29b1b4b92d6f0", 1678011278),
+                new ("abc81d58ebe3b9a87100d47f58bf15e9b1cbf62d38623f11d0f0d17179f5f3bc", 1678011279),
+                new ("abc81d58ebe3b9a87100d47f58bf15e9b1cbf62d38623f11d0f0d17179f5f3bd", 1678011280),
+                new ("abc81d58ebe3b9a87100d47f58bf15e9b1cbf62d38623f11d0f0d17179f5f3be", 1678011281),
+                new ("abc81d58ebe3b9a87100d47f58bf15e9b1cbf62d38623f11d0f0d17179f5f3bf", 1678011282),
+                new ("abc81d58ebe3b9a87100d47f58bf15e9b1cbf62d38623f11d0f0d17179f5f3c0", 1678011283),
+                new ("abc81d58ebe3b9a87100d47f58bf15e9b1cbf62d38623f11d0f0d17179f5f3c1", 1678011284),
+                new ("abc81d58ebe3b9a87100d47f58bf15e9b1cbf62d38623f11d0f0d17179f5f3c2", 1678011285),
+                new ("abc81d58ebe3b9a87100d47f58bf15e9b1cbf62d38623f11d0f0d17179f5f3c3", 1678011286),
+                new ("abc81d58ebe3b9a87100d47f58bf15e9b1cbf62d38623f11d0f0d17179f5f3c4", 1678011287),
+                new ("abc81d58ebe3b9a87100d47f58bf15e9b1cbf62d38623f11d0f0d17179f5f3c5", 1678011288),
+                new ("abc81d58ebe3b9a87100d47f58bf15e9b1cbf62d38623f11d0f0d17179f5f3c6", 1678011289),
+                new ("abc81d58ebe3b9a87100d47f58bf15e9b1cbf62d38623f11d0f0d17179f5f3c7", 1678011290),
+                new ("abc81d58ebe3b9a87100d47f58bf15e9b1cbf62d38623f11d0f0d17179f5f3c8", 1678011291),
+                new ("abc81d58ebe3b9a87100d47f58bf15e9b1cbf62d38623f11d0f0d17179f5f3c9", 1678011292),
+                new ("abc81d58ebe3b9a87100d47f58bf15e9b1cbf62d38623f11d0f0d17179f5f3ca", 1678011293),
+                new ("abc81d58ebe3b9a87100d47f58bf15e9b1cbf62d38623f11d0f0d17179f5f3cb", 1678011294),
+                new ("abc81d58ebe3b9a87100d47f58bf15e9b1cbf62d38623f11d0f0d17179f5f3cc", 1678011295),
+                new ("abc81d58ebe3b9a87100d47f58bf15e9b1cbf62d38623f11d0f0d17179f5f3cd", 1678011296),
+                new ("abc81d58ebe3b9a87100d47f58bf15e9b1cbf62d38623f11d0f0d17179f5f3d0", 1678011297),
+                new ("abc81d58ebe3b9a87100d47f58bf15e9b1cbf62d38623f11d0f0d17179f5f3d1", 1678011298),
+                new ("abc81d58ebe3b9a87100d47f58bf15e9b1cbf62d38623f11d0f0d17179f5f3d2", 1678011301),
+                new ("abc81d58ebe3b9a87100d47f58bf15e9b1cbf62d38623f11d0f0d17179f5f3d3", 1678011302),
+                new ("abc81d58ebe3b9a87100d47f58bf15e9b1cbf62d38623f11d0f0d17179f5f3d4", 1678011303),
+                new ("abc81d58ebe3b9a87100d47f58bf15e9b1cbf62d38623f11d0f0d17179f5f3d5", 1678011304),
+                new ("abc81d58ebe3b9a87100d47f58bf15e9b1cbf62d38623f11d0f0d17179f5f3d6", 1678011305),
+                new ("abc81d58ebe3b9a87100d47f58bf15e9b1cbf62d38623f11d0f0d17179f5f3d7", 1678011306),
+                new ("abc81d58ebe3b9a87100d47f58bf15e9b1cbf62d38623f11d0f0d17179f5f3d8", 1678011307),
+                new ("abc81d58ebe3b9a87100d47f58bf15e9b1cbf62d38623f11d0f0d17179f5f3d9", 1678011308),
+                new ("abc81d58ebe3b9a87100d47f58bf15e9b1cbf62d38623f11d0f0d17179f5f3da", 1678011309),
+                new ("abc81d58ebe3b9a87100d47f58bf15e9b1cbf62d38623f11d0f0d17179f5f3db", 1678011310),
+                new ("abc81d58ebe3b9a87100d47f58bf15e9b1cbf62d38623f11d0f0d17179f5f3dc", 1678011311),
+                new ("abc81d58ebe3b9a87100d47f58bf15e9b1cbf62d38623f11d0f0d17179f5f3dd", 1678011312),
+                new ("abc81d58ebe3b9a87100d47f58bf15e9b1cbf62d38623f11d0f0d17179f5f3de", 1678011313)
+            ];
+
+            var builder = new NegentropyBuilder(new NegentropyOptions());
+            builder.AddRange(items);
+
+            var ne = builder.Build();
+            var result = ne.Initiate();
+
+            result.Should().BeEquivalentTo(expected);
+        }
+
+        [Fact]
+        public void InitiationLongEqualTimestampsTest()
+        {
+            var expected = "6186a091d70e20abc81d58ebe3b9a87100d47f58bf15e9b1cbf62d38623f11d0f0d17179f5f3be018ab006273abaa0c5a1759a7069fb4d640120abc81d58ebe3b9a87100d47f58bf15e9b1cbf62d38623f11d0f0d17179f5f3c1015f7c56695039382da4283f0aa978cde30120abc81d58ebe3b9a87100d47f58bf15e9b1cbf62d38623f11d0f0d17179f5f3c40134f7410d270c0cf7ea1882a3b7219acf0120abc81d58ebe3b9a87100d47f58bf15e9b1cbf62d38623f11d0f0d17179f5f3c601b2e06a675303a7656c759aa99c84c54f0120abc81d58ebe3b9a87100d47f58bf15e9b1cbf62d38623f11d0f0d17179f5f3c801098f62ce750b28bb99d18688b1a23e110120abc81d58ebe3b9a87100d47f58bf15e9b1cbf62d38623f11d0f0d17179f5f3ca01378443b2bb69b1c17613cc620eeaca3c0120abc81d58ebe3b9a87100d47f58bf15e9b1cbf62d38623f11d0f0d17179f5f3cc0177f5ad96846fae737f9f7c4a90ddcbb10120abc81d58ebe3b9a87100d47f58bf15e9b1cbf62d38623f11d0f0d17179f5f3d00166c46e7240de606b2e376b83cf3d04980120abc81d58ebe3b9a87100d47f58bf15e9b1cbf62d38623f11d0f0d17179f5f3d20177cc22e5eeafb4f4a273cda0626050db0120abc81d58ebe3b9a87100d47f58bf15e9b1cbf62d38623f11d0f0d17179f5f3d401719a1a3a5146190e7eb84d3e52ac7b830120abc81d58ebe3b9a87100d47f58bf15e9b1cbf62d38623f11d0f0d17179f5f3d6014f6e4490344ad616c7e7064ecce868a90120abc81d58ebe3b9a87100d47f58bf15e9b1cbf62d38623f11d0f0d17179f5f3d8010b999dfb663e37a3676bcb5bd49b9ff80120abc81d58ebe3b9a87100d47f58bf15e9b1cbf62d38623f11d0f0d17179f5f3da01d9820357cc97b12610b9b3450832968c0120abc81d58ebe3b9a87100d47f58bf15e9b1cbf62d38623f11d0f0d17179f5f3dc01115152633e1ab6989c1c9616dc36fb300120abc81d58ebe3b9a87100d47f58bf15e9b1cbf62d38623f11d0f0d17179f5f3de01b17772afa3c0d85bc81457a87b0a83d30000019b6e9972496614a88d32c8a008a1b78c";
+            Item[] items = [
+                new ("eb6b05c2e3b008592ac666594d78ed83e7b9ab30f825b9b08878128f7500008c", 1678011277),
+                new ("39b916432333e069a4386917609215cc688eb99f06fed01aadc29b1b4b92d6f0", 1678011277),
+                new ("abc81d58ebe3b9a87100d47f58bf15e9b1cbf62d38623f11d0f0d17179f5f3bc", 1678011277),
+                new ("abc81d58ebe3b9a87100d47f58bf15e9b1cbf62d38623f11d0f0d17179f5f3bd", 1678011277),
+                new ("abc81d58ebe3b9a87100d47f58bf15e9b1cbf62d38623f11d0f0d17179f5f3be", 1678011277),
+                new ("abc81d58ebe3b9a87100d47f58bf15e9b1cbf62d38623f11d0f0d17179f5f3bf", 1678011277),
+                new ("abc81d58ebe3b9a87100d47f58bf15e9b1cbf62d38623f11d0f0d17179f5f3c0", 1678011277),
+                new ("abc81d58ebe3b9a87100d47f58bf15e9b1cbf62d38623f11d0f0d17179f5f3c1", 1678011277),
+                new ("abc81d58ebe3b9a87100d47f58bf15e9b1cbf62d38623f11d0f0d17179f5f3c2", 1678011277),
+                new ("abc81d58ebe3b9a87100d47f58bf15e9b1cbf62d38623f11d0f0d17179f5f3c3", 1678011277),
+                new ("abc81d58ebe3b9a87100d47f58bf15e9b1cbf62d38623f11d0f0d17179f5f3c4", 1678011277),
+                new ("abc81d58ebe3b9a87100d47f58bf15e9b1cbf62d38623f11d0f0d17179f5f3c5", 1678011277),
+                new ("abc81d58ebe3b9a87100d47f58bf15e9b1cbf62d38623f11d0f0d17179f5f3c6", 1678011277),
+                new ("abc81d58ebe3b9a87100d47f58bf15e9b1cbf62d38623f11d0f0d17179f5f3c7", 1678011277),
+                new ("abc81d58ebe3b9a87100d47f58bf15e9b1cbf62d38623f11d0f0d17179f5f3c8", 1678011277),
+                new ("abc81d58ebe3b9a87100d47f58bf15e9b1cbf62d38623f11d0f0d17179f5f3c9", 1678011277),
+                new ("abc81d58ebe3b9a87100d47f58bf15e9b1cbf62d38623f11d0f0d17179f5f3ca", 1678011277),
+                new ("abc81d58ebe3b9a87100d47f58bf15e9b1cbf62d38623f11d0f0d17179f5f3cb", 1678011277),
+                new ("abc81d58ebe3b9a87100d47f58bf15e9b1cbf62d38623f11d0f0d17179f5f3cc", 1678011277),
+                new ("abc81d58ebe3b9a87100d47f58bf15e9b1cbf62d38623f11d0f0d17179f5f3cd", 1678011277),
+                new ("abc81d58ebe3b9a87100d47f58bf15e9b1cbf62d38623f11d0f0d17179f5f3d0", 1678011277),
+                new ("abc81d58ebe3b9a87100d47f58bf15e9b1cbf62d38623f11d0f0d17179f5f3d1", 1678011277),
+                new ("abc81d58ebe3b9a87100d47f58bf15e9b1cbf62d38623f11d0f0d17179f5f3d2", 1678011277),
+                new ("abc81d58ebe3b9a87100d47f58bf15e9b1cbf62d38623f11d0f0d17179f5f3d3", 1678011277),
+                new ("abc81d58ebe3b9a87100d47f58bf15e9b1cbf62d38623f11d0f0d17179f5f3d4", 1678011277),
+                new ("abc81d58ebe3b9a87100d47f58bf15e9b1cbf62d38623f11d0f0d17179f5f3d5", 1678011277),
+                new ("abc81d58ebe3b9a87100d47f58bf15e9b1cbf62d38623f11d0f0d17179f5f3d6", 1678011277),
+                new ("abc81d58ebe3b9a87100d47f58bf15e9b1cbf62d38623f11d0f0d17179f5f3d7", 1678011277),
+                new ("abc81d58ebe3b9a87100d47f58bf15e9b1cbf62d38623f11d0f0d17179f5f3d8", 1678011277),
+                new ("abc81d58ebe3b9a87100d47f58bf15e9b1cbf62d38623f11d0f0d17179f5f3d9", 1678011277),
+                new ("abc81d58ebe3b9a87100d47f58bf15e9b1cbf62d38623f11d0f0d17179f5f3da", 1678011277),
+                new ("abc81d58ebe3b9a87100d47f58bf15e9b1cbf62d38623f11d0f0d17179f5f3db", 1678011277),
+                new ("abc81d58ebe3b9a87100d47f58bf15e9b1cbf62d38623f11d0f0d17179f5f3dc", 1678011277),
+                new ("abc81d58ebe3b9a87100d47f58bf15e9b1cbf62d38623f11d0f0d17179f5f3dd", 1678011277),
+                new ("abc81d58ebe3b9a87100d47f58bf15e9b1cbf62d38623f11d0f0d17179f5f3de", 1678011277)
+            ];
+
+            var builder = new NegentropyBuilder(new NegentropyOptions());
+            builder.AddRange(items);
+
+            var ne = builder.Build();
+            var result = ne.Initiate();
+
+            result.Should().BeEquivalentTo(expected);
+        }
+    }
+}

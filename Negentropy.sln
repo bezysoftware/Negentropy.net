@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35222.181
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Negentropy", "src\Negentropy\Negentropy.csproj", "{002EEED2-E545-4691-A1E1-0DBB3806EE23}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Negentropy.Tests", "test\Negentropy.Tests\Negentropy.Tests.csproj", "{D897BCFC-A859-476E-9E5D-AE0EE5F8C017}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{002EEED2-E545-4691-A1E1-0DBB3806EE23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{002EEED2-E545-4691-A1E1-0DBB3806EE23}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{002EEED2-E545-4691-A1E1-0DBB3806EE23}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{002EEED2-E545-4691-A1E1-0DBB3806EE23}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D897BCFC-A859-476E-9E5D-AE0EE5F8C017}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D897BCFC-A859-476E-9E5D-AE0EE5F8C017}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D897BCFC-A859-476E-9E5D-AE0EE5F8C017}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D897BCFC-A859-476E-9E5D-AE0EE5F8C017}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A37FB13A-A617-4B79-8B64-877764EDEE0E}
+	EndGlobalSection
+EndGlobal

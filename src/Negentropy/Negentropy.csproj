@@ -1,0 +1,40 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <VersionPrefix>1.0.0</VersionPrefix>
+    <TargetFramework>net8.0</TargetFramework>
+    <PackageId>Negentropy.net</PackageId>
+    <Authors>bezysoftware</Authors>
+    <Description>.NET implementation of the Negentropy protocol for range-based set reconciliation.</Description>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageIcon>Logo.png</PackageIcon>
+    <PackageProjectUrl>https://github.com/bezysoftware/negentropy.net</PackageProjectUrl>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <IncludeSource>True</IncludeSource>
+    <IncludeSymbols>True</IncludeSymbols>
+    <PackageTags>Negentropy</PackageTags>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <AssemblyName>Negentropy</AssemblyName>
+    <RootNamespace>Negentropy</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <LangVersion>12</LangVersion>
+  </PropertyGroup>
+	
+  <ItemGroup>
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+      <_Parameter1>Negentropy.Tests</_Parameter1>
+    </AssemblyAttribute>
+    <None Include="..\..\art\Logo.png" Link="Assets\Logo.png" Pack="true" PackagePath="" />
+    <None Include="..\..\LICENSE" Link="Assets\LICENSE" Pack="true" PackagePath="" />
+    <None Include="..\..\README.md" Link="Assets\README.md" Pack="true" PackagePath="" />
+  </ItemGroup>
+	
+  <ItemGroup>
+    <!--<PackageReference Include="System.Collections.Immutable" Version="9.0.0-rc.2.24473.5" />-->
+    <PackageReference Include="System.Collections.Immutable" Version="8.0.0" />
+  </ItemGroup>
+
+</Project>
