@@ -29,7 +29,7 @@ namespace Negentropy
                 return Timestamp.CompareTo(other.Timestamp);
             }
 
-            return StructuralComparisons.StructuralComparer.Compare(Id, other.Id);
+            return ByteArrayComparer.Instance.Compare(Id, other.Id);
         }
     }
 }
