@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Linq;
 
 namespace Negentropy
 {
@@ -10,6 +11,7 @@ namespace Negentropy
         const byte PROTOCOL_VERSION = 0x61; // Version 1
         const int BUCKETS = 16;
         const int ID_SIZE = 32;
+        const int RESERVE = 200;
 
         private readonly Bound[] items;
         private readonly NegentropyOptions options;
@@ -114,7 +116,7 @@ namespace Negentropy
                         var theirFingerprint = reader.ReadBytes(Fingerprint.SIZE);
                         var ouringerprint = Fingerprint.Calculate(this.items, lower, upper);
 
-                        if (StructuralComparisons.StructuralEqualityComparer.Equals(theirFingerprint, ouringerprint))
+                        if (ByteArrayComparer.Instance.Equals(theirFingerprint, ouringerprint))
                         {
                             skip = true;
                         }
@@ -126,7 +128,7 @@ namespace Negentropy
                         break;
                     case Mode.IdList:
                         var count = reader.ReadVarInt();
-                        var theirIds = new HashSet<byte[]>();
+                        var theirIds = new HashSet<byte[]>(ByteArrayComparer.Instance);
 
                         for (var i = 0L; i < count; i++)
                         {
@@ -145,10 +147,10 @@ namespace Negentropy
                                 .Skip(lower)
                                 .Take(upper - lower)
                                 .Select(x => x.Id)
-                                .ToArray();
+                                .ToHashSet(ByteArrayComparer.Instance);
 
-                            haveIds.AddRange(ourIds.Where(our => !theirIds.Any(their => StructuralComparisons.StructuralEqualityComparer.Equals(our, their))));
-                            needIds.AddRange(theirIds.Where(their => !ourIds.Any(our => StructuralComparisons.StructuralEqualityComparer.Equals(our, their))));
+                            haveIds.AddRange(ourIds.Where(our => !theirIds.Contains(our)));
+                            needIds.AddRange(theirIds.Where(their => !ourIds.Contains(their)));
                         }
                         else
                         {
@@ -157,7 +159,7 @@ namespace Negentropy
                             var endBound = bound;
                             var spaceLeft = this.options.FrameSizeLimit == 0
                                 ? int.MaxValue
-                                : (int)((this.options.FrameSizeLimit - 200 - writer.BaseStream.Position) / ID_SIZE);
+                                : (int)((this.options.FrameSizeLimit - RESERVE - writer.BaseStream.Position) / ID_SIZE);
 
                             var responseIds = this.items
                                 .Skip(lower)
@@ -177,7 +179,7 @@ namespace Negentropy
                         throw new InvalidOperationException("Unexpected mode");
                 }
 
-                if (this.options.FrameSizeLimit > 0 && writer.BaseStream.Position > this.options.FrameSizeLimit - 200)
+                if (this.options.FrameSizeLimit > 0 && writer.BaseStream.Position > this.options.FrameSizeLimit - RESERVE)
                 {
                     var remainingFingerprint = Fingerprint.Calculate(this.items, upper, this.items.Length);
                     
