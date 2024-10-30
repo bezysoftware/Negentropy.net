@@ -123,7 +123,7 @@ namespace Negentropy
                         else
                         {
                             doSkip();
-                            SplitRange(writer, lower, upper, bound, prevBoundOut);
+                            prevBoundOut = SplitRange(writer, lower, upper, bound, prevBoundOut);
                         }
                         break;
                     case Mode.IdList:
@@ -207,7 +207,7 @@ namespace Negentropy
                 needIds.Select(x => Convert.ToHexString(x).ToLower()).ToArray());
         }
 
-        private void SplitRange(BinaryWriter writer, int lower, int upper, Bound upperBound, Bound previousBound)
+        private Bound SplitRange(BinaryWriter writer, int lower, int upper, Bound upperBound, Bound previousBound)
         {
             var elements = upper - lower;
 
@@ -221,6 +221,8 @@ namespace Negentropy
                 {
                     writer.Write(item.Id);
                 }
+
+                return upperBound;
             } 
             else
             {
@@ -250,6 +252,8 @@ namespace Negentropy
 
                     previousBound = nextBound;
                 }
+
+                return previousBound;
             }
         }
 
@@ -260,7 +264,11 @@ namespace Negentropy
                 return new Bound(current.Timestamp);
             }
 
-            var shared = Enumerable.Range(0, previous.Id.Length).Count(i => i < current.Id.Length && previous.Id[i] == current.Id[i]) + 1;
+            var shared = Enumerable
+                .Range(0, Math.Min(current.Id.Length, previous.Id.Length))
+                .TakeWhile(i => previous.Id[i] == current.Id[i])
+                .Count() + 1;
+            
             var result = new byte[shared];
             
             Array.Copy(current.Id, result, shared);

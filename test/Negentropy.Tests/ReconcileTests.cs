@@ -159,5 +159,37 @@ namespace Negentropy.Tests
                 "abc81d58ebe3b9a87100d47f58bf15e9b1cbf62d38623f11d0f0d17179f5f3de"
             ]);
         }
+
+        [Fact]
+        public void LoadFromFile()
+        {
+            var items1 = File
+                .ReadAllLines("input1.txt")
+                .Select(x => x.Split(","))
+                .Select(x => new Item(x[1], long.Parse(x[0])))
+                .ToArray();
+
+            var items2 = File
+                .ReadAllLines("input2.txt")
+                .Select(x => x.Split(","))
+                .Select(x => new Item(x[1], long.Parse(x[0])))
+                .ToArray();
+
+            var ne1 = new NegentropyBuilder(new NegentropyOptions()).AddRange(items1).Build();
+            var ne2 = new NegentropyBuilder(new NegentropyOptions()).AddRange(items2).Build();
+
+            var init = ne1.Initiate();
+
+            var result = ne2.Reconcile(init);
+            result = ne1.Reconcile(result.Query);
+
+            while (result.Query != string.Empty)
+            {
+                result = ne2.Reconcile(result.Query);
+                result = ne1.Reconcile(result.Query);
+            }
+
+            result.NeedIds.Intersect(result.HaveIds).Should().BeEmpty();
+        }
     }
 }
