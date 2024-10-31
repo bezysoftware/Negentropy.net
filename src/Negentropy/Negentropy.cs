@@ -66,7 +66,7 @@
             if (version != PROTOCOL_VERSION)
             {
                 if (this.isInitiator) throw new InvalidOperationException("unsupported negentropy protocol version requested: " + (version - 0x60));
-                else writer.ToHexString();
+                else return new NegentropyReconciliation(writer.ToHexString(), [], []);
             }
 
             var prevBoundOut = Bound.Min;

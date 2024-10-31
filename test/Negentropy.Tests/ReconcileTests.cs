@@ -223,6 +223,16 @@ namespace Negentropy.Tests
 
             //result = ne1.Reconcile(result.Query);
             //result.Query.Should().Be(expectations[4]);
+
+        }
+
+        [Fact]
+        public void VersionFallbackTest()
+        {
+            var ne = new NegentropyBuilder(new NegentropyOptions()).Build();
+            var result = ne.Reconcile("62aabbccddeeff");
+
+            result.Query.Should().Be("61");
         }
     }
 }
