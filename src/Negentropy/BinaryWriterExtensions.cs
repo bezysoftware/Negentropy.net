@@ -1,4 +1,6 @@
-﻿namespace Negentropy
+﻿using System.Security;
+
+namespace Negentropy
 {
     internal static class BinaryWriterExtensions
     {
@@ -39,10 +41,15 @@
         public static string ToHexString(this BinaryWriter writer)
         {
             var stream = (MemoryStream)writer.BaseStream;
+            var position = (int)stream.Position;
+            var array = stream.ToArray();
 
-            stream.Seek(0, SeekOrigin.Begin);
+            if (stream.Position != stream.Length)
+            {
+                Array.Resize(ref array, position);
+            }
 
-            return Convert.ToHexString(stream.ToArray());
+            return Convert.ToHexString(array);
         }
     }
 }

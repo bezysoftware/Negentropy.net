@@ -191,5 +191,38 @@ namespace Negentropy.Tests
 
             result.NeedIds.Intersect(result.HaveIds).Should().BeEmpty();
         }
+
+        [Fact]
+        public void LoadFromFileFrameSizeLimit()
+        {
+            var items = File
+                .ReadAllLines("input3.txt")
+                .Select(x => x.Split(","))
+                .Select(x => new Item(x[1], long.Parse(x[0])))
+                .ToArray();
+
+            var expectations = File.ReadAllLines("expectation3.txt");
+
+            var ne1 = new NegentropyBuilder(new NegentropyOptions { FrameSizeLimit = 60000 }).Build();
+            var ne2 = new NegentropyBuilder(new NegentropyOptions { FrameSizeLimit = 500000 }).AddRange(items).Build();
+
+            var init = ne1.Initiate();
+
+            init.Should().Be(expectations[0]);
+
+            var result = ne2.Reconcile(init);
+
+            result.Query.Should().Be(expectations[1]);
+            result = ne1.Reconcile(result.Query);
+
+            result.NeedIds.Should().HaveCount(15619);
+            result.Query.Should().Be(expectations[2]);
+
+            //result = ne2.Reconcile(result.Query);
+            //result.Query.Should().Be(expectations[3]);
+
+            //result = ne1.Reconcile(result.Query);
+            //result.Query.Should().Be(expectations[4]);
+        }
     }
 }

@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Linq;
-
-namespace Negentropy
+﻿namespace Negentropy
 {
     /// <summary>
     /// Negentropy service. Client first needs to initiate the protocol, send the message to server and reconcile the response.
@@ -157,14 +154,25 @@ namespace Negentropy
                             doSkip();
                             
                             var endBound = bound;
-                            var spaceLeft = this.options.FrameSizeLimit == 0
-                                ? int.MaxValue
-                                : (int)((this.options.FrameSizeLimit - RESERVE - writer.BaseStream.Position) / ID_SIZE);
+                            var takeItems = 0;
+                            var idsLength = 0;
+
+                            for (var i = lower; i < upper; i++)
+                            {
+                                if (this.options.FrameSizeLimit > 0 && writer.BaseStream.Position + idsLength > this.options.FrameSizeLimit - RESERVE)
+                                {
+                                    endBound = this.items[i];
+                                    upper = i;
+                                    break;
+                                }
+
+                                takeItems++;
+                                idsLength += this.items[i].Id.Length;
+                            }
 
                             var responseIds = this.items
                                 .Skip(lower)
-                                .Take(upper - lower)
-                                .Take(spaceLeft)
+                                .Take(takeItems)
                                 .Select(x => x.Id)
                                 .ToList();
 
@@ -172,6 +180,7 @@ namespace Negentropy
                             writer.WriteVarInt(Mode.IdList);
                             writer.WriteVarInt(responseIds.Count);
                             responseIds.ForEach(writer.Write);
+                            lastValidOffset = writer.BaseStream.Position;
                         }
 
                         break;
